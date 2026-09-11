@@ -1,0 +1,468 @@
+{
+  "last_node_id": 8,
+  "last_link_id": 12,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "OlmYuE2ModelLoader",
+      "pos": [
+        0,
+        0
+      ],
+      "size": [
+        290,
+        190
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "YUE2_MODEL",
+          "type": "YUE2_MODEL",
+          "links": [
+            1,
+            4,
+            7,
+            10
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "OlmYuE2ModelLoader"
+      },
+      "widgets_values": [
+        "yue2",
+        "yue2_vae"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "OlmYuE2Request",
+      "pos": [
+        0,
+        190
+      ],
+      "size": [
+        350,
+        360
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "YUE2_REQUEST",
+          "type": "YUE2_REQUEST",
+          "links": [
+            2
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "OlmYuE2Request"
+      },
+      "widgets_values": [
+        "gentle acoustic piano, warm intimate recording, slow flowing melody",
+        "[Verse 1]\nI left a light beside the door\nAnd set two cups out like before\nThe morning rain has cleared the street\nI hear your footsteps through the beat\n\n[Chorus]\nTake the long way home with me\nPast the shops and sleeping trees\nWe have nowhere else to be\nTake the long way home with me\n\n[Verse 2]\nYour coat is folded on the chair\nThe smell of coffee fills the air\nYou tell a story, I lose track\nAnd ask you just to start it back\n\n[Chorus]\nTake the long way home with me\nPast the shops and sleeping trees\nWe have nowhere else to be\nTake the long way home with me",
+        "full",
+        831001,
+        "fixed",
+        ""
+      ]
+    },
+    {
+      "id": 3,
+      "type": "OlmYuE2Sampling",
+      "pos": [
+        420,
+        0
+      ],
+      "size": [
+        380,
+        610
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "YUE2_SAMPLING",
+          "type": "YUE2_SAMPLING",
+          "links": [
+            3,
+            6,
+            9
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "OlmYuE2Sampling"
+      },
+      "widgets_values": [
+        0.7,
+        0.9,
+        30,
+        1.005,
+        100,
+        32,
+        4096,
+        1.0,
+        0.95,
+        100,
+        1.2,
+        50,
+        200,
+        9000,
+        32
+      ]
+    },
+    {
+      "id": 4,
+      "type": "OlmYuE2Plan",
+      "pos": [
+        860,
+        0
+      ],
+      "size": [
+        290,
+        190
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "YUE2_MODEL",
+          "link": 1
+        },
+        {
+          "name": "request",
+          "type": "YUE2_REQUEST",
+          "link": 2
+        },
+        {
+          "name": "sampling",
+          "type": "YUE2_SAMPLING",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "plan",
+          "type": "YUE2_PLAN",
+          "links": [
+            5
+          ]
+        },
+        {
+          "name": "abc",
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "name": "run_info",
+          "type": "YUE2_RUN_INFO",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "OlmYuE2Plan"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 5,
+      "type": "OlmYuE2Semantic",
+      "pos": [
+        1180,
+        0
+      ],
+      "size": [
+        290,
+        190
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "YUE2_MODEL",
+          "link": 4
+        },
+        {
+          "name": "plan",
+          "type": "YUE2_PLAN",
+          "link": 5
+        },
+        {
+          "name": "sampling",
+          "type": "YUE2_SAMPLING",
+          "link": 6
+        }
+      ],
+      "outputs": [
+        {
+          "name": "semantic",
+          "type": "YUE2_SEMANTIC",
+          "links": [
+            8
+          ]
+        },
+        {
+          "name": "run_info",
+          "type": "YUE2_RUN_INFO",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "OlmYuE2Semantic"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 6,
+      "type": "OlmYuE2Synthesize",
+      "pos": [
+        1500,
+        0
+      ],
+      "size": [
+        290,
+        190
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "YUE2_MODEL",
+          "link": 7
+        },
+        {
+          "name": "semantic",
+          "type": "YUE2_SEMANTIC",
+          "link": 8
+        },
+        {
+          "name": "sampling",
+          "type": "YUE2_SAMPLING",
+          "link": 9
+        }
+      ],
+      "outputs": [
+        {
+          "name": "latents",
+          "type": "YUE2_LATENTS",
+          "links": [
+            11
+          ]
+        },
+        {
+          "name": "run_info",
+          "type": "YUE2_RUN_INFO",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "OlmYuE2Synthesize"
+      },
+      "widgets_values": [
+        true
+      ],
+      "title": "YuE2 Synthesize \u2014 Experimental offload"
+    },
+    {
+      "id": 7,
+      "type": "OlmYuE2Decode",
+      "pos": [
+        1820,
+        0
+      ],
+      "size": [
+        290,
+        190
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "YUE2_MODEL",
+          "link": 10
+        },
+        {
+          "name": "latents",
+          "type": "YUE2_LATENTS",
+          "link": 11
+        }
+      ],
+      "outputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": [
+            12
+          ]
+        },
+        {
+          "name": "run_info",
+          "type": "YUE2_RUN_INFO",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "OlmYuE2Decode"
+      },
+      "widgets_values": [
+        "tiled",
+        1024
+      ]
+    },
+    {
+      "id": 8,
+      "type": "SaveAudioAdvanced",
+      "pos": [
+        2170,
+        0
+      ],
+      "size": [
+        290,
+        190
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 12
+        }
+      ],
+      "outputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveAudioAdvanced"
+      },
+      "widgets_values": [
+        "audio/YuE2_offload",
+        "flac"
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      4,
+      0,
+      "YUE2_MODEL"
+    ],
+    [
+      2,
+      2,
+      0,
+      4,
+      1,
+      "YUE2_REQUEST"
+    ],
+    [
+      3,
+      3,
+      0,
+      4,
+      2,
+      "YUE2_SAMPLING"
+    ],
+    [
+      4,
+      1,
+      0,
+      5,
+      0,
+      "YUE2_MODEL"
+    ],
+    [
+      5,
+      4,
+      0,
+      5,
+      1,
+      "YUE2_PLAN"
+    ],
+    [
+      6,
+      3,
+      0,
+      5,
+      2,
+      "YUE2_SAMPLING"
+    ],
+    [
+      7,
+      1,
+      0,
+      6,
+      0,
+      "YUE2_MODEL"
+    ],
+    [
+      8,
+      5,
+      0,
+      6,
+      1,
+      "YUE2_SEMANTIC"
+    ],
+    [
+      9,
+      3,
+      0,
+      6,
+      2,
+      "YUE2_SAMPLING"
+    ],
+    [
+      10,
+      1,
+      0,
+      7,
+      0,
+      "YUE2_MODEL"
+    ],
+    [
+      11,
+      6,
+      0,
+      7,
+      1,
+      "YUE2_LATENTS"
+    ],
+    [
+      12,
+      7,
+      0,
+      8,
+      0,
+      "AUDIO"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}

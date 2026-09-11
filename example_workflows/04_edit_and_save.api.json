@@ -1,0 +1,158 @@
+{
+  "1": {
+    "class_type": "OlmYuE2ModelLoader",
+    "inputs": {
+      "model": "yue2",
+      "vae": "yue2_vae"
+    }
+  },
+  "2": {
+    "class_type": "OlmYuE2Request",
+    "inputs": {
+      "style": "gentle acoustic piano, warm intimate recording, slow flowing melody",
+      "lyrics": "[Verse 1]\nI left a light beside the door\nAnd set two cups out like before\nThe morning rain has cleared the street\nI hear your footsteps through the beat\n\n[Chorus]\nTake the long way home with me\nPast the shops and sleeping trees\nWe have nowhere else to be\nTake the long way home with me\n\n[Verse 2]\nYour coat is folded on the chair\nThe smell of coffee fills the air\nYou tell a story, I lose track\nAnd ask you just to start it back\n\n[Chorus]\nTake the long way home with me\nPast the shops and sleeping trees\nWe have nowhere else to be\nTake the long way home with me",
+      "cot": "full",
+      "seed": 831001,
+      "abc": "X:1\nT:Original melody\nM:4/4\nL:1/8\nQ:1/4=90\nK:C\nC D E F G A B c | c B A G F E D C |"
+    }
+  },
+  "3": {
+    "class_type": "OlmYuE2Sampling",
+    "inputs": {
+      "abc_temperature": 0.7,
+      "abc_top_p": 0.9,
+      "abc_top_k": 30,
+      "abc_repetition_penalty": 1.005,
+      "abc_penalty_window": 100,
+      "abc_min_tokens": 32,
+      "abc_max_tokens": 4096,
+      "semantic_temperature": 1.0,
+      "semantic_top_p": 0.95,
+      "semantic_top_k": 100,
+      "semantic_repetition_penalty": 1.2,
+      "semantic_penalty_window": 50,
+      "semantic_min_tokens": 200,
+      "semantic_max_tokens": 9000,
+      "ode_steps": 32
+    }
+  },
+  "4": {
+    "class_type": "OlmYuE2Plan",
+    "inputs": {
+      "model": [
+        "1",
+        0
+      ],
+      "request": [
+        "2",
+        0
+      ],
+      "sampling": [
+        "3",
+        0
+      ]
+    }
+  },
+  "5": {
+    "class_type": "OlmYuE2Semantic",
+    "inputs": {
+      "model": [
+        "1",
+        0
+      ],
+      "plan": [
+        "9",
+        0
+      ],
+      "sampling": [
+        "3",
+        0
+      ]
+    }
+  },
+  "6": {
+    "class_type": "OlmYuE2Synthesize",
+    "inputs": {
+      "model": [
+        "1",
+        0
+      ],
+      "semantic": [
+        "5",
+        0
+      ],
+      "sampling": [
+        "3",
+        0
+      ]
+    }
+  },
+  "7": {
+    "class_type": "OlmYuE2Decode",
+    "inputs": {
+      "model": [
+        "1",
+        0
+      ],
+      "latents": [
+        "6",
+        0
+      ],
+      "mode": "tiled",
+      "tile_frames": 1024
+    }
+  },
+  "8": {
+    "class_type": "SaveAudioAdvanced",
+    "inputs": {
+      "audio": [
+        "7",
+        0
+      ],
+      "filename_prefix": "audio/YuE2_edited",
+      "format": "flac"
+    }
+  },
+  "9": {
+    "class_type": "OlmYuE2ApplyEditedScore",
+    "inputs": {
+      "model": [
+        "1",
+        0
+      ],
+      "plan": [
+        "4",
+        0
+      ],
+      "abc": "X:1\nT:Edited melody\nM:4/4\nL:1/8\nQ:1/4=90\nK:C\nE G A G E D C2 | D E G E D C C2 |"
+    }
+  },
+  "10": {
+    "class_type": "OlmYuE2SavePlan",
+    "inputs": {
+      "plan": [
+        "9",
+        0
+      ],
+      "name": "edited_plan"
+    }
+  },
+  "11": {
+    "class_type": "OlmYuE2SaveRun",
+    "inputs": {
+      "latents": [
+        "6",
+        0
+      ],
+      "audio": [
+        "7",
+        0
+      ],
+      "run_info": [
+        "7",
+        1
+      ],
+      "name": "edited_run"
+    }
+  }
+}

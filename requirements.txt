@@ -1,0 +1,4 @@
+# Extra dependencies only. Reuse ComfyUI's Torch, Transformers, NumPy,
+# safetensors and Hugging Face Hub; do not install the upstream pinned stack.
+tiktoken
+accelerate

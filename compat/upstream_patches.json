@@ -1,0 +1,84 @@
+{
+  "yue2/pipeline.py": [
+    {
+      "old": "                 vae_core_frames=None, quantization=\"none\", offload_ar=False, progress=True):",
+      "new": "                 vae_core_frames=None, quantization=\"none\", offload_ar=False, progress=True,\n                 manage_cuda_memory=True):"
+    },
+    {
+      "old": "            total = torch.cuda.get_device_properties(self.device).total_memory\n            budget = min((self.memory_budget_gib - 2) * 2**30, total - 2 * 2**30)\n            if budget <= 0:\n                raise ValueError(\"Memory budget must leave room for a 2GiB reserve\")\n            torch.cuda.set_per_process_memory_fraction(min(budget / total, 1), self.device)",
+      "new": "            if manage_cuda_memory:\n                total = torch.cuda.get_device_properties(self.device).total_memory\n                budget = min((self.memory_budget_gib - 2) * 2**30, total - 2 * 2**30)\n                if budget <= 0:\n                    raise ValueError(\"Memory budget must leave room for a 2GiB reserve\")\n                torch.cuda.set_per_process_memory_fraction(min(budget / total, 1), self.device)"
+    },
+    {
+      "old": "    def _load_model(self, for_nar=False):",
+      "new": "    def _move_model(self, model, device):\n        return model.to(device)\n\n    def _load_model(self, for_nar=False):"
+    },
+    {
+      "old": "            self._model.to(self.device)\n        return self._model",
+      "new": "            self._move_model(self._model, self.device)\n        return self._model"
+    },
+    {
+      "old": "                self._model.to(\"cpu\")",
+      "new": "                self._move_model(self._model, \"cpu\")"
+    },
+    {
+      "old": "                model = self._vae.to(self.device)",
+      "new": "                model = self._move_model(self._vae, self.device)"
+    },
+    {
+      "old": "            model.to(\"cpu\")\n            if self.device.type == \"cuda\":",
+      "new": "            self._move_model(model, \"cpu\")\n            if self.device.type == \"cuda\":"
+    },
+    {
+      "old": "    def synthesize(self, semantic, *, cancelled=None):",
+      "new": "    def _offload_ar(self, model):\n        from .nar import _offload_ar\n        return _offload_ar(model, self.offload_ar)\n\n    def synthesize(self, semantic, *, cancelled=None):"
+    },
+    {
+      "old": "                                cancelled=cancelled, on_progress=report)",
+      "new": "                                cancelled=cancelled, on_progress=report,\n                                offload_context=self._offload_ar)"
+    }
+  ],
+  "yue2/modeling_yue2.py": [
+    {
+      "old": "class Attention(nn.Module):\n",
+      "new": "class Attention(nn.Module):\n    sdpa = staticmethod(sdpa)\n\n"
+    },
+    {
+      "old": "out = sdpa(q, k, v, attn_mask=attention_mask[..., :k.shape[2]])",
+      "new": "out = self.sdpa(q, k, v, attn_mask=attention_mask[..., :k.shape[2]])"
+    },
+    {
+      "old": "out = sdpa(q, k, v, is_causal=(T > 1 and k.shape[2] == T))",
+      "new": "out = self.sdpa(q, k, v, is_causal=(T > 1 and k.shape[2] == T))"
+    },
+    {
+      "old": "core_out = sdpa(query, key, value, attn_mask=attention_mask)",
+      "new": "core_out = self.self_attn.sdpa(query, key, value, attn_mask=attention_mask)"
+    },
+    {
+      "old": "class YuE2ForCausalLM(YuE2PreTrainedModel, GenerationMixin):",
+      "new": "class YuE2ForCausalLM(YuE2PreTrainedModel, GenerationMixin):\n    nar_attention = None\n"
+    }
+  ],
+  "yue2/nar.py": [
+    {
+      "old": "def attention(q, k, v, *, causal=False, backend=\"sdpa\", query_chunk_size=None):",
+      "new": "def attention(q, k, v, *, causal=False, backend=\"sdpa\", query_chunk_size=None,\n              sdpa_fn=F.scaled_dot_product_attention):"
+    },
+    {
+      "old": "outputs.append(F.scaled_dot_product_attention(",
+      "new": "outputs.append(sdpa_fn("
+    },
+    {
+      "old": "return attention(q, k, v, causal=causal, backend=self.backend, query_chunk_size=self.query_chunk_size)",
+      "new": "return (self.model.nar_attention or attention)(q, k, v, causal=causal, backend=self.backend, query_chunk_size=self.query_chunk_size)"
+    },
+    {
+      "old": "               on_progress: Callable[[int, int], None] | None = None):",
+      "new": "               on_progress: Callable[[int, int], None] | None = None,\n               offload_context=None):"
+    },
+    {
+      "old": "        with _offload_ar(model, offload_ar):",
+      "new": "        with offload_context(model) if offload_context is not None else _offload_ar(model, offload_ar):"
+    }
+  ]
+}

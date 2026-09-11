@@ -1,0 +1,21 @@
+.yue2-score-panel { padding: 16px; height: 100%; overflow: auto; font: 13px/1.5 sans-serif; color: var(--fg-color, #ddd); }
+.yue2-score-panel h2 { margin: 0 0 12px; font-size: 18px; }
+.yue2-score-panel h3 { margin: 0 0 12px; font-size: 14px; }
+.yue2-score-panel label { display: block; font-weight: 600; }
+.yue2-score-panel p { margin: 12px 0; }
+.yue2-score-panel .yue2-score-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.yue2-score-panel button, .yue2-score-panel select { padding: 7px 9px; border: 1px solid var(--border-color, #666); border-radius: 5px; background: var(--comfy-input-bg, #252525); color: inherit; }
+.yue2-score-panel select { min-width: 0; max-width: 100%; flex: 1 1 160px; }
+.yue2-score-panel button { cursor: pointer; }
+.yue2-score-panel button:disabled { opacity: .45; cursor: default; }
+.yue2-score-panel button[aria-selected="true"] { border-color: #829de3; background: #263857; color: #fff; }
+.yue2-score-panel button:focus-visible, .yue2-score-panel select:focus-visible, .yue2-score-panel textarea:focus-visible { outline: 2px solid #829de3; outline-offset: 2px; }
+.yue2-score-panel textarea { box-sizing: border-box; width: 100%; min-height: 320px; resize: vertical; padding: 10px; background: var(--comfy-input-bg, #252525); color: inherit; font: 12px/1.5 monospace; }
+.yue2-score-panel pre { white-space: pre-wrap; overflow-wrap: anywhere; font: 12px/1.5 monospace; }
+.yue2-score-panel .yue2-score-notation { background: #faf9f5; color: #161616; padding: 6px; border-radius: 5px; overflow: auto; }
+.yue2-score-panel .yue2-score-notation svg { max-width: 100%; }
+.yue2-score-panel .yue2-score-editor-section { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border-color, #666); }
+.yue2-score-panel .yue2-score-status { padding: 12px; border: 1px solid; border-left-width: 4px; border-radius: 5px; font-weight: 600; }
+.yue2-score-panel .yue2-score-status[data-kind="warning"] { background: #3c2b12; border-color: #e7a940; color: #ffe0a3; }
+.yue2-score-panel .yue2-score-status[data-kind="success"] { background: #163326; border-color: #72be94; color: #c4f1d6; }
+.yue2-score-panel [hidden] { display: none !important; }

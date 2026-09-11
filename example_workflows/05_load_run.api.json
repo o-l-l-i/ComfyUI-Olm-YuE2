@@ -1,0 +1,19 @@
+{
+  "1": {
+    "class_type": "OlmYuE2LoadRun",
+    "inputs": {
+      "artifact": "output/select_saved_run"
+    }
+  },
+  "2": {
+    "class_type": "SaveAudioAdvanced",
+    "inputs": {
+      "audio": [
+        "1",
+        3
+      ],
+      "filename_prefix": "audio/YuE2_loaded",
+      "format": "flac"
+    }
+  }
+}

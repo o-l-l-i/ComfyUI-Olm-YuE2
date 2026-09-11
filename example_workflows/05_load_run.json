@@ -1,0 +1,107 @@
+{
+  "last_node_id": 2,
+  "last_link_id": 1,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "OlmYuE2LoadRun",
+      "pos": [
+        400,
+        0
+      ],
+      "size": [
+        300,
+        190
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "plan",
+          "type": "YUE2_PLAN",
+          "links": []
+        },
+        {
+          "name": "semantic",
+          "type": "YUE2_SEMANTIC",
+          "links": []
+        },
+        {
+          "name": "latents",
+          "type": "YUE2_LATENTS",
+          "links": []
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": [
+            1
+          ]
+        },
+        {
+          "name": "run_info",
+          "type": "YUE2_RUN_INFO",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "OlmYuE2LoadRun"
+      },
+      "widgets_values": [
+        "output/select_saved_run"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "SaveAudioAdvanced",
+      "pos": [
+        800,
+        0
+      ],
+      "size": [
+        300,
+        190
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveAudioAdvanced"
+      },
+      "widgets_values": [
+        "audio/YuE2_loaded",
+        "flac"
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      3,
+      2,
+      0,
+      "AUDIO"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}
